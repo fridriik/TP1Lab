@@ -1,25 +1,29 @@
 package tienda.models.productos;
 
 import tienda.models.interfaces.Comestible;
-import tienda.models.interfaces.Importado;
+import tienda.utils.ValidadorProductos;
 
 import java.time.LocalDate;
 
-public class Envasado extends Producto implements Comestible, Importado {
+public class Envasado extends Producto implements Comestible {
     private String tipoEnvase;
     private boolean importado;
     private LocalDate fechaVencimiento;
     private int calorias;
 
-    public Envasado(String identificador, String descripcion, int cantidadStock,
-                            double precioUnidad, double porcentajeGanancia,
-                            String tipoEnvase, boolean importado) {
+    public Envasado(String identificador,
+                    String descripcion,
+                    int cantidadStock,
+                    double precioUnidad,
+                    double porcentajeGanancia,
+                    String tipoEnvase,
+                    boolean importado,
+                    LocalDate fechaVencimiento) {
         super(identificador, descripcion, cantidadStock, precioUnidad, porcentajeGanancia);
-        if (!identificador.matches("AB\\d{3}")) {
-            throw new IllegalArgumentException("Identificador inválido para producto envasado");
-        }
+        ValidadorProductos.validarIdentificador(this);
         this.tipoEnvase = tipoEnvase;
         this.importado = importado;
+        this.fechaVencimiento = fechaVencimiento;
     }
 
     @Override
@@ -36,33 +40,22 @@ public class Envasado extends Producto implements Comestible, Importado {
         return calcularPrecioVenta() * (1 - Math.min(porcentajeDescuento, 15) / 100);
     }
 
+    public boolean isImportado() {
+        return importado;
+    }
+
     @Override
     public LocalDate getFechaVencimiento() {
-        return null;
+        return fechaVencimiento;
     }
 
     @Override
     public void setFechaVencimiento(LocalDate fechaVencimiento) {
-
+        this.fechaVencimiento = fechaVencimiento;
     }
 
     @Override
     public int getCalorias() {
-        return 0;
-    }
-
-    @Override
-    public void setCalorias(int calorias) {
-
-    }
-
-    @Override
-    public boolean esImportado() {
-        return false;
-    }
-
-    @Override
-    public void setImportado(boolean importado) {
-
+        return calorias;
     }
 }

@@ -1,25 +1,34 @@
 package tienda.models.productos;
 
 import tienda.models.interfaces.Comestible;
-import tienda.models.interfaces.Importado;
+import tienda.utils.ValidadorProductos;
 
 import java.time.LocalDate;
 
-public class Bebida extends Producto implements Comestible, Importado {
+public class Bebida extends Producto implements Comestible {
     private double graduacionAlcoholica;
     private boolean importado;
     private LocalDate fechaVencimiento;
     private int calorias;
 
-    public Bebida(String identificador, String descripcion, int cantidadStock,
-                  double precioUnidad, double porcentajeGanancia,
-                  double graduacionAlcoholica, boolean importado) {
+    public Bebida(String identificador,
+                  String descripcion,
+                  int cantidadStock,
+                  double precioUnidad,
+                  double porcentajeGanancia,
+                  double graduacionAlcoholica,
+                  boolean importado,
+                  LocalDate fechaVencimiento) {
         super(identificador, descripcion, cantidadStock, precioUnidad, porcentajeGanancia);
-        if (!identificador.matches("AC\\d{3}")) {
-            throw new IllegalArgumentException("Identificador inválido para bebida");
-        }
+        ValidadorProductos.validarIdentificador(this);
         this.graduacionAlcoholica = graduacionAlcoholica;
         this.importado = importado;
+        this.fechaVencimiento = fechaVencimiento;
+        this.calorias = calcularCalorias();
+    }
+
+    public boolean isImportado() {
+        return importado;
     }
 
     @Override
@@ -38,37 +47,26 @@ public class Bebida extends Producto implements Comestible, Importado {
 
     @Override
     public LocalDate getFechaVencimiento() {
-        return null;
+        return fechaVencimiento;
     }
 
     @Override
     public void setFechaVencimiento(LocalDate fechaVencimiento) {
-
+        this.fechaVencimiento = fechaVencimiento;
     }
 
     @Override
     public int getCalorias() {
-        return 0;
+        return calorias;
     }
 
-    @Override
-    public void setCalorias(int calorias) {
+    private int calcularCalorias() {
         if (graduacionAlcoholica <= 2) {
-            this.calorias = calorias;
+            return (int) graduacionAlcoholica; // Calorías igual a la graduación alcohólica
         } else if (graduacionAlcoholica <= 4.5) {
-            this.calorias = (int)(calorias * 1.25);
+            return (int) (graduacionAlcoholica * 1.25);
         } else {
-            this.calorias = (int)(calorias * 1.5);
+            return (int) (graduacionAlcoholica * 1.5);
         }
-    }
-
-    @Override
-    public boolean esImportado() {
-        return false;
-    }
-
-    @Override
-    public void setImportado(boolean importado) {
-
     }
 }

@@ -1,5 +1,7 @@
 package tienda.models.productos;
 
+import tienda.utils.ValidadorProductos;
+
 public class Limpieza extends Producto {
     private String tipoAplicacion;
 
@@ -7,15 +9,9 @@ public class Limpieza extends Producto {
                             double precioUnidad, double porcentajeGanancia,
                             String tipoAplicacion) {
         super(identificador, descripcion, cantidadStock, precioUnidad, porcentajeGanancia);
+        ValidadorProductos.validarIdentificador(this);
         setTipoAplicacion(tipoAplicacion);
-        validarIdentificador(identificador);
-        validarPorcentajeGanancia();
-    }
-
-    private void validarIdentificador(String identificador) {
-        if (!identificador.matches("AZ\\d{3}")) {
-            throw new IllegalArgumentException("Identificador inválido para producto de limpieza");
-        }
+        ValidadorProductos.validarPorcentajeGanancia(this);
     }
 
     public void setTipoAplicacion(String tipoAplicacion) {
@@ -32,14 +28,6 @@ public class Limpieza extends Producto {
 
     public String getTipoAplicacion() {
         return tipoAplicacion;
-    }
-
-    private void validarPorcentajeGanancia() {
-        if (!tipoAplicacion.equals("COCINA") && !tipoAplicacion.equals("MULTIUSO")) {
-            if (porcentajeGanancia < 10 || porcentajeGanancia > 25) {
-                throw new IllegalArgumentException("Porcentaje de ganancia inválido para este tipo de producto de limpieza");
-            }
-        }
     }
 
     @Override
