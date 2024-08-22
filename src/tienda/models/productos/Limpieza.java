@@ -2,6 +2,8 @@ package tienda.models.productos;
 
 import tienda.utils.ValidadorProductos;
 
+import java.util.Objects;
+
 public class Limpieza extends Producto {
     private String tipoAplicacion;
 
@@ -39,4 +41,19 @@ public class Limpieza extends Producto {
     public void aplicarDescuento(double porcentajeDescuento) {
         this.descuentoAplicado = porcentajeDescuento;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!super.equals(o)) return false;
+        if (getClass() != o.getClass()) return false;
+        Limpieza limpieza = (Limpieza) o;
+        return Objects.equals(tipoAplicacion, limpieza.tipoAplicacion);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), tipoAplicacion);
+    }
+
 }

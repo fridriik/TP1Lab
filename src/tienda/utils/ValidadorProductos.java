@@ -5,6 +5,8 @@ import tienda.models.productos.Envasado;
 import tienda.models.productos.Limpieza;
 import tienda.models.productos.Producto;
 
+import java.util.List;
+
 public class ValidadorProductos {
     public static void validarProducto(Producto producto) {
         String identificador = producto.getIdentificador();

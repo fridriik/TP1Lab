@@ -28,6 +28,17 @@ public class TiendaTest {
                 LocalDate.of(2025, 6, 15)
         );
 
+        Envasado cafeColombiano = new Envasado(
+                "AB122",
+                "Café",
+                10,
+                100,
+                15,
+                "Lata",
+                true,
+                LocalDate.of(2025, 6, 15)
+        );
+
         /*//Creados para verificar porcentaje de ganancia
         Envasado oroComestible = new Envasado(
                 "AB959",
@@ -113,8 +124,12 @@ public class TiendaTest {
 
         System.out.println("\nComprando productos:");
         tienda.comprarProducto(cafe);
+        System.out.println(tienda);
+        tienda.comprarProducto(cafeColombiano);
         tienda.comprarProducto(seltzer);
         tienda.comprarProducto(detergente);
+        System.out.println(tienda);
+
 
         System.out.println("\nCalorias según graduaciones alcoholicas:");
         System.out.println("Calorías de seltzer: " + seltzer.getCalorias());

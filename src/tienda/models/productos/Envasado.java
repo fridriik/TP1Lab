@@ -4,6 +4,7 @@ import tienda.models.interfaces.Comestible;
 import tienda.utils.ValidadorProductos;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Envasado extends Producto implements Comestible {
     private String tipoEnvase;
@@ -58,4 +59,25 @@ public class Envasado extends Producto implements Comestible {
     public double getCalorias() {
         return calorias;
     }
+
+    public String getTipoEnvase() {
+        return tipoEnvase;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!super.equals(o)) return false;
+        if (getClass() != o.getClass()) return false;
+        Envasado envasado = (Envasado) o;
+        return importado == envasado.importado &&
+                Objects.equals(tipoEnvase, envasado.tipoEnvase) &&
+                Objects.equals(fechaVencimiento, envasado.fechaVencimiento);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), tipoEnvase, importado, fechaVencimiento);
+    }
+
 }

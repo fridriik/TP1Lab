@@ -3,6 +3,7 @@ package tienda.negocio;
 import tienda.models.productos.Bebida;
 import tienda.models.productos.Envasado;
 import tienda.models.productos.Producto;
+import tienda.utils.ValidadorProductos;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -24,22 +25,36 @@ public class Tienda {
     }
 
     public void comprarProducto(Producto producto) {
-        int cantidadCompra = producto.getCantidadStock();
-        int totalUnidades = productosDisponibles.values().stream().mapToInt(Integer::intValue).sum();
-        if (totalUnidades + cantidadCompra > maxProductosStock) {
-            System.out.println("No se pueden agregar nuevos productos a la tienda ya que se alcanzó el máximo de stock");
-            return;
+        Producto productoEncontrado = null;
+        for (Producto p : productosDisponibles.keySet()) {
+            if (p.getIdentificador().equals(producto.getIdentificador()) &&
+                    p.getDescripcion().equals(producto.getDescripcion())) {
+                productoEncontrado = p;
+                System.out.println("Producto tiene el mismo ID y descripción, verificar instancia");
+                break;
+            }
         }
-        double costoTotal = producto.getPrecioUnidad() * cantidadCompra;
-        if (saldoCaja < costoTotal) {
-            System.out.println("El producto no podrá ser agregado a la tienda por saldo insuficiente en la caja");
-            return;
+        if (productoEncontrado != null) {
+            int cantidadActual = productosDisponibles.get(productoEncontrado);
+            productosDisponibles.put(productoEncontrado, cantidadActual + producto.getCantidadStock());
+        } else {
+            int cantidadCompra = producto.getCantidadStock();
+            int totalUnidades = productosDisponibles.values().stream().mapToInt(Integer::intValue).sum();
+            if (totalUnidades + cantidadCompra > maxProductosStock) {
+                System.out.println("No se pueden agregar nuevos productos a la tienda ya que se alcanzó el máximo de stock");
+                return;
+            }
+            double costoTotal = producto.getPrecioUnidad() * cantidadCompra;
+            if (saldoCaja < costoTotal) {
+                System.out.println("El producto no podrá ser agregado a la tienda por saldo insuficiente en la caja");
+                return;
+            }
+            saldoCaja -= costoTotal;
+            productosDisponibles.put(producto, cantidadCompra);
+            System.out.println("Producto agregado exitosamente");
         }
-        saldoCaja -= costoTotal;
-        productosDisponibles.putIfAbsent(producto, producto.getCantidadStock());
-        productosDisponibles.merge(producto, cantidadCompra, Integer::sum);
-        System.out.println("Producto agregado exitosamente");
     }
+
 
     public void venderProductos(Map<Producto, Integer> productosVenta) {
         if (productosVenta.size() > 3) {
@@ -96,5 +111,12 @@ public class Tienda {
                 .sorted(Map.Entry.comparingByKey(Comparator.comparingDouble(Producto::calcularPrecioVenta)))
                 .map(entry -> entry.getKey().getDescripcion().toUpperCase())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public String toString() {
+        return "Tienda{" +
+                ", \nproductosDisponibles=" + productosDisponibles +
+                '}';
     }
 }

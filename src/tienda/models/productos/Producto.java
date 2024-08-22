@@ -1,5 +1,7 @@
 package tienda.models.productos;
 
+import java.util.Objects;
+
 public abstract class Producto {
     protected String identificador;
     protected String descripcion;
@@ -57,5 +59,28 @@ public abstract class Producto {
 
     public double getDescuentoAplicado() {
         return descuentoAplicado;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Producto producto = (Producto) o;
+        return Objects.equals(identificador, producto.identificador) && Objects.equals(descripcion, producto.descripcion);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(identificador, descripcion);
+    }
+
+    @Override
+    public String toString() {
+        return "Producto{" +
+                "\nidentificador='" + identificador + '\'' +
+                ", \ndescripcion='" + descripcion + '\'' +
+                ", \ncantidadStock=" + cantidadStock +
+                ", \nprecioUnidad=" + precioUnidad +
+                '}';
     }
 }
