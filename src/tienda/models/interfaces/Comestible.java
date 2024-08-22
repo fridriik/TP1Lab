@@ -5,5 +5,6 @@ import java.time.LocalDate;
 public interface Comestible {
     LocalDate getFechaVencimiento();
     void setFechaVencimiento(LocalDate fechaVencimiento);
-    int getCalorias();
+    double getCalorias();
+    boolean isImportado();
 }

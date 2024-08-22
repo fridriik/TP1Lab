@@ -20,7 +20,7 @@ public class Envasado extends Producto implements Comestible {
                     boolean importado,
                     LocalDate fechaVencimiento) {
         super(identificador, descripcion, cantidadStock, precioUnidad, porcentajeGanancia);
-        ValidadorProductos.validarIdentificador(this);
+        ValidadorProductos.validarProducto(this);
         this.tipoEnvase = tipoEnvase;
         this.importado = importado;
         this.fechaVencimiento = fechaVencimiento;
@@ -28,16 +28,16 @@ public class Envasado extends Producto implements Comestible {
 
     @Override
     public double calcularPrecioVenta() {
-        double precio = precioUnidad * (1 + Math.min(porcentajeGanancia, 20) / 100);
+        double precio = precioUnidad * (1 + porcentajeGanancia / 100);
         if (importado) {
             precio *= 1.12;
         }
-        return precio;
+        return precio * (1 - descuentoAplicado / 100);
     }
 
     @Override
-    public double aplicarDescuento(double porcentajeDescuento) {
-        return calcularPrecioVenta() * (1 - Math.min(porcentajeDescuento, 15) / 100);
+    public void aplicarDescuento(double porcentajeDescuento) {
+        this.descuentoAplicado = porcentajeDescuento;
     }
 
     public boolean isImportado() {
@@ -55,7 +55,7 @@ public class Envasado extends Producto implements Comestible {
     }
 
     @Override
-    public int getCalorias() {
+    public double getCalorias() {
         return calorias;
     }
 }

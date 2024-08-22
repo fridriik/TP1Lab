@@ -7,6 +7,7 @@ public abstract class Producto {
     protected double precioUnidad;
     protected double porcentajeGanancia;
     protected boolean disponibleVenta;
+    protected double descuentoAplicado;
 
     public Producto(String identificador, String descripcion, int cantidadStock,
                     double precioUnidad, double porcentajeGanancia) {
@@ -16,10 +17,11 @@ public abstract class Producto {
         this.precioUnidad = precioUnidad;
         this.porcentajeGanancia = porcentajeGanancia;
         this.disponibleVenta = true;
+        this.descuentoAplicado = 0;
     }
 
     public abstract double calcularPrecioVenta();
-    public abstract double aplicarDescuento(double porcentajeDescuento);
+    public abstract void aplicarDescuento(double porcentajeDescuento);
 
     public void setDisponibleVenta(boolean disponibleVenta) {
         this.disponibleVenta = disponibleVenta;
@@ -51,5 +53,9 @@ public abstract class Producto {
 
     public boolean isDisponibleVenta() {
         return disponibleVenta;
+    }
+
+    public double getDescuentoAplicado() {
+        return descuentoAplicado;
     }
 }

@@ -2,14 +2,13 @@ package tienda.models.productos;
 
 import tienda.models.interfaces.Comestible;
 import tienda.utils.ValidadorProductos;
-
 import java.time.LocalDate;
 
 public class Bebida extends Producto implements Comestible {
     private double graduacionAlcoholica;
     private boolean importado;
     private LocalDate fechaVencimiento;
-    private int calorias;
+    private double calorias;
 
     public Bebida(String identificador,
                   String descripcion,
@@ -20,7 +19,7 @@ public class Bebida extends Producto implements Comestible {
                   boolean importado,
                   LocalDate fechaVencimiento) {
         super(identificador, descripcion, cantidadStock, precioUnidad, porcentajeGanancia);
-        ValidadorProductos.validarIdentificador(this);
+        ValidadorProductos.validarProducto(this);
         this.graduacionAlcoholica = graduacionAlcoholica;
         this.importado = importado;
         this.fechaVencimiento = fechaVencimiento;
@@ -37,12 +36,12 @@ public class Bebida extends Producto implements Comestible {
         if (importado) {
             precio *= 1.12;
         }
-        return precio;
+        return precio * (1 - descuentoAplicado / 100);
     }
 
     @Override
-    public double aplicarDescuento(double porcentajeDescuento) {
-        return calcularPrecioVenta() * (1 - Math.min(porcentajeDescuento, 10) / 100);
+    public void aplicarDescuento(double porcentajeDescuento) {
+        this.descuentoAplicado = porcentajeDescuento;
     }
 
     @Override
@@ -56,17 +55,17 @@ public class Bebida extends Producto implements Comestible {
     }
 
     @Override
-    public int getCalorias() {
+    public double getCalorias() {
         return calorias;
     }
 
-    private int calcularCalorias() {
+    private double calcularCalorias() {
         if (graduacionAlcoholica <= 2) {
-            return (int) graduacionAlcoholica; // Calorías igual a la graduación alcohólica
+            return graduacionAlcoholica;
         } else if (graduacionAlcoholica <= 4.5) {
-            return (int) (graduacionAlcoholica * 1.25);
+            return (graduacionAlcoholica * 1.25);
         } else {
-            return (int) (graduacionAlcoholica * 1.5);
+            return (graduacionAlcoholica * 1.5);
         }
     }
 }
