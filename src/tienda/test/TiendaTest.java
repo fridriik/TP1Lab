@@ -37,7 +37,17 @@ public class TiendaTest {
                 LocalDate.of(2025, 6, 15)
         );
 
-        /*//Creados para verificar porcentaje de ganancia
+        Bebida seltzer = new Bebida(
+                "Seltzer",
+                10,
+                100,
+                9,
+                3,
+                false,
+                LocalDate.of(2025, 12, 31)
+        );
+
+        /*//Creados para testear casos malos
         Envasado oroComestible = new Envasado(
                 "Oro comestible",
                 1,
@@ -62,27 +72,17 @@ public class TiendaTest {
                 15,
                 9,
                 "BANIO"
-        );*/
-
-        Bebida seltzer = new Bebida(
-                "Seltzer",
-                10,
-                100,
-                9,
-                3,
-                false,
-                LocalDate.of(2025, 12, 31)
         );
 
         Bebida cervezaKirin = new Bebida(
-                "Kirin ",
-                10,
-                10,
+                "Kirin",
+                50,
+                200,
                 7,
                 16,
                 true,
                 LocalDate.of(2025, 12, 31)
-        );
+        );*/
 
         Bebida cervezaQuilmes = new Bebida(
                 "Quilmes",
@@ -100,7 +100,7 @@ public class TiendaTest {
                 10,
                 5,
                 0,
-                false,
+                true,
                 LocalDate.of(2025, 12, 31)
         );
 
@@ -118,8 +118,8 @@ public class TiendaTest {
         tienda.comprarProducto(cafeColombiano);
         tienda.comprarProducto(seltzer);
         tienda.comprarProducto(detergente);
+        //tienda.comprarProducto(cervezaKirin);
         System.out.println(tienda);
-
 
         System.out.println("\nCalorias según graduaciones alcoholicas:");
         System.out.println("Calorías de seltzer: " + seltzer.getCalorias());
@@ -146,8 +146,8 @@ public class TiendaTest {
         System.out.println("Precio total del detergente: " + detergente.calcularPrecioVenta());
 
         System.out.println("\nSon importados?");
-        System.out.println("Precio con impuesto de cerveza: " + cervezaKirin.calcularPrecioVenta());
-        System.out.println("Precio sin impuesto de cerveza: " + cervezaQuilmes.calcularPrecioVenta());
+        System.out.println("Precio con impuesto: " + agua.calcularPrecioVenta());
+        System.out.println("Precio sin impuesto: " + cervezaQuilmes.calcularPrecioVenta());
 
         System.out.println("\nVendiendo productos:");
         Map<Producto, Integer> venta1 = new HashMap<>();
@@ -155,6 +155,11 @@ public class TiendaTest {
         venta1.put(detergente, 12);
         venta1.put(cafe, 5);
         tienda.venderProductos(venta1);
+
+        /* Intento de venta sin stock
+        Map<Producto, Integer> venta11 = new HashMap<>();
+        venta11.put(seltzer, 10);
+        tienda.venderProductos(venta11);*/
 
         System.out.println("\nIntentando vender producto no disponible:");
         tienda.cambiarDisponibilidadProducto(detergente, false);
