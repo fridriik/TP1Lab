@@ -18,7 +18,6 @@ public class TiendaTest {
                 10000);
 
         Envasado cafe = new Envasado(
-                "AB122",
                 "Café",
                 10,
                 10,
@@ -29,8 +28,7 @@ public class TiendaTest {
         );
 
         Envasado cafeColombiano = new Envasado(
-                "AB122",
-                "Café",
+                "Café colombiano",
                 10,
                 100,
                 15,
@@ -41,7 +39,6 @@ public class TiendaTest {
 
         /*//Creados para verificar porcentaje de ganancia
         Envasado oroComestible = new Envasado(
-                "AB959",
                 "Oro comestible",
                 1,
                 10000,
@@ -52,7 +49,6 @@ public class TiendaTest {
         );
 
         Limpieza suavizante = new Limpieza(
-                "AZ002",
                 "Suavizante",
                 10,
                 150,
@@ -61,7 +57,6 @@ public class TiendaTest {
         );
 
         Limpieza pastillaInodoro = new Limpieza(
-                "AZ023",
                 "Pastilla inodoro",
                 10,
                 15,
@@ -70,7 +65,6 @@ public class TiendaTest {
         );*/
 
         Bebida seltzer = new Bebida(
-                "AC789",
                 "Seltzer",
                 10,
                 100,
@@ -81,7 +75,6 @@ public class TiendaTest {
         );
 
         Bebida cervezaKirin = new Bebida(
-                "AC111",
                 "Kirin ",
                 10,
                 10,
@@ -92,7 +85,6 @@ public class TiendaTest {
         );
 
         Bebida cervezaQuilmes = new Bebida(
-                "AC999",
                 "Quilmes",
                 10,
                 10,
@@ -103,7 +95,6 @@ public class TiendaTest {
         );
 
         Bebida agua = new Bebida(
-                "AC001",
                 "Agua",
                 10,
                 10,
@@ -114,7 +105,6 @@ public class TiendaTest {
         );
 
         Limpieza detergente = new Limpieza(
-                "AZ101",
                 "Detergente",
                 20,
                 15,

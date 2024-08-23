@@ -1,32 +1,59 @@
 package tienda.models.productos;
 
 import tienda.models.interfaces.Comestible;
-import tienda.utils.ValidadorProductos;
-import java.time.LocalDate;
-import java.util.Objects;
 
+import java.time.LocalDate;
+
+/**
+ * Clase que representa una bebida en la tienda.
+ * Extiende la clase Producto e implementa la interfaz Comestible.
+ */
 public class Bebida extends Producto implements Comestible {
+    private static int contadorBebida = 1;
     private double graduacionAlcoholica;
     private boolean importado;
     private LocalDate fechaVencimiento;
     private double calorias;
 
-    public Bebida(String identificador,
-                  String descripcion,
+    /**
+     * Constructor para crear una nueva bebida.
+     * Tiene un identificador AC*** -> * = autoincremental
+     *
+     * @param descripcion Descripción del producto.
+     * @param cantidadStock Cantidad inicial en stock.
+     * @param precioUnidad Precio por unidad.
+     * @param porcentajeGanancia Porcentaje de ganancia sobre el precio.
+     * @param graduacionAlcoholica Graduación alcohólica de la bebida.
+     * @param importado Indica si la bebida es importada.
+     * @param fechaVencimiento Fecha de vencimiento de la bebida.
+     * @throws IllegalArgumentException Si el porcentaje de ganancia o descuento no cumple con las restricciones.
+     */
+    public Bebida(String descripcion,
                   int cantidadStock,
                   double precioUnidad,
                   double porcentajeGanancia,
                   double graduacionAlcoholica,
                   boolean importado,
                   LocalDate fechaVencimiento) {
-        super(identificador, descripcion, cantidadStock, precioUnidad, porcentajeGanancia);
-        ValidadorProductos.validarProducto(this);
+        super(descripcion, cantidadStock, precioUnidad, porcentajeGanancia);
         this.graduacionAlcoholica = graduacionAlcoholica;
         this.importado = importado;
         this.fechaVencimiento = fechaVencimiento;
         this.calorias = calcularCalorias();
+        this.identificador = "AC" + String.format("%03d", contadorBebida++);
+        validarPorcentajes();
     }
 
+    private void validarPorcentajes() {
+        if (porcentajeGanancia > 20) {
+            throw new IllegalArgumentException("El porcentaje de ganancia para productos comestibles no puede superar el 20%.");
+        }
+        if (getDescuentoAplicado() > 10) {
+            throw new IllegalArgumentException("El porcentaje de descuento de las bebidas no puede superar el 10%.");
+        }
+    }
+
+    @Override
     public boolean isImportado() {
         return importado;
     }
@@ -42,6 +69,9 @@ public class Bebida extends Producto implements Comestible {
 
     @Override
     public void aplicarDescuento(double porcentajeDescuento) {
+        if (porcentajeDescuento > 10) {
+            throw new IllegalArgumentException("El porcentaje de descuento no puede superar el 10% para bebidas.");
+        }
         this.descuentoAplicado = porcentajeDescuento;
     }
 
@@ -70,24 +100,18 @@ public class Bebida extends Producto implements Comestible {
         }
     }
 
-    public double getGraduacionAlcoholica() {
-        return graduacionAlcoholica;
-    }
-
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!super.equals(o)) return false;
-        if (getClass() != o.getClass()) return false;
-        Bebida bebida = (Bebida) o;
-        return Double.compare(bebida.graduacionAlcoholica, graduacionAlcoholica) == 0 &&
-                importado == bebida.importado &&
-                Objects.equals(fechaVencimiento, bebida.fechaVencimiento);
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        StringBuilder sbSuper = new StringBuilder(super.toString());
+        sb.append("| ");
+        sb.append("Producto bebible: ");
+        sb.append(sbSuper);
+        sb.append(", Graduación alcohólica: ").append(graduacionAlcoholica).append("%");
+        sb.append(", Importado: ").append(importado ? "Sí" : "No");
+        sb.append(", Calorías: ").append(calorias);
+        sb.append(", Vence: ").append(fechaVencimiento);
+        sb.append(" |");
+        return sb.toString();
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), graduacionAlcoholica, importado, fechaVencimiento);
-    }
-
 }
