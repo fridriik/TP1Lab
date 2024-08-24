@@ -41,15 +41,8 @@ public class Bebida extends Producto implements Comestible {
         this.fechaVencimiento = fechaVencimiento;
         this.calorias = calcularCalorias();
         this.identificador = "AC" + String.format("%03d", contadorBebida++);
-        validarPorcentajes();
-    }
-
-    private void validarPorcentajes() {
         if (porcentajeGanancia > 20) {
             throw new IllegalArgumentException("El porcentaje de ganancia para productos comestibles no puede superar el 20%.");
-        }
-        if (getDescuentoAplicado() > 10) {
-            throw new IllegalArgumentException("El porcentaje de descuento de las bebidas no puede superar el 10%.");
         }
     }
 

@@ -40,15 +40,8 @@ public class Envasado extends Producto implements Comestible {
         this.importado = importado;
         this.fechaVencimiento = fechaVencimiento;
         this.identificador = "AB" + String.format("%03d", contadorEnvasado++);
-        validarPorcentajes();
-    }
-
-    private void validarPorcentajes() {
         if (getPorcentajeGanancia() > 20) {
             throw new IllegalArgumentException("El porcentaje de ganancia para productos comestibles no puede superar el 20%.");
-        }
-        if (getDescuentoAplicado() > 15) {
-            throw new IllegalArgumentException("El porcentaje de descuento de los envasados no puede superar el 15%.");
         }
     }
 

@@ -56,25 +56,15 @@ public class Tienda {
         if (producto == null) {
             throw new IllegalArgumentException("El producto no puede ser nulo.");
         }
-        if (producto.getCantidadStock() < 0) {
-            throw new IllegalArgumentException("La cantidad de stock no puede ser negativa.");
-        }
-        if (producto.getPrecioUnidad() < 0) {
-            throw new IllegalArgumentException("El precio por unidad no puede ser negativo.");
-        }
-
         validarProductoExistente(producto);
-
         int cantidadCompra = producto.getCantidadStock();
         if (!hayEspacioSuficiente(cantidadCompra)) {
-            throw new IllegalArgumentException("No se pueden agregar nuevos productos a la tienda ya que se alcanzó el máximo de stock");
+            throw new IllegalArgumentException("No se pueden agregar nuevos productos a la tienda ya que se alcanzó el máximo de stock.");
         }
-
         double costoTotal = producto.getPrecioUnidad() * cantidadCompra;
         if (!haySaldoSuficiente(costoTotal)) {
-            throw new IllegalArgumentException("El producto no podrá ser agregado a la tienda por saldo insuficiente en la caja");
+            throw new IllegalArgumentException("El producto no podrá ser agregado a la tienda por saldo insuficiente en la caja.");
         }
-
         realizarCompra(producto, cantidadCompra, costoTotal);
     }
 
@@ -224,5 +214,4 @@ public class Tienda {
 
         return sb.toString();
     }
-
 }

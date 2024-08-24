@@ -32,7 +32,15 @@ public abstract class Producto {
         this.porcentajeGanancia = porcentajeGanancia;
         this.disponibleVenta = true;
         this.descuentoAplicado = 0;
-
+        if (descripcion == null || descripcion.trim().isEmpty()) {
+            throw new IllegalArgumentException("La descripción no puede ser nula o vacía.");
+        }
+        if (cantidadStock < 0) {
+            throw new IllegalArgumentException("La cantidad de stock no puede ser negativa.");
+        }
+        if (precioUnidad < 0) {
+            throw new IllegalArgumentException("El precio por unidad no puede ser negativo.");
+        }
         if (porcentajeGanancia < 0) {
             throw new IllegalArgumentException("El porcentaje de ganancia no puede ser negativo.");
         }

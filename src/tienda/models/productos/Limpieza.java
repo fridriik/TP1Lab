@@ -40,9 +40,6 @@ public class Limpieza extends Producto {
                 (getPorcentajeGanancia() < 10 || getPorcentajeGanancia() > 25)) {
             throw new IllegalArgumentException("El porcentaje de ganancia para productos de limpieza debe estar entre 10% y 25%, excepto COCINA y MULTIUSO.");
         }
-        if (getDescuentoAplicado() > 20) {
-            throw new IllegalArgumentException("El porcentaje de descuento de los productos de limpieza no puede superar el 20%.");
-        }
     }
 
     /**
