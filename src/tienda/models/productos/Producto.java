@@ -35,8 +35,8 @@ public abstract class Producto {
         if (descripcion == null || descripcion.trim().isEmpty()) {
             throw new IllegalArgumentException("La descripción no puede ser nula o vacía.");
         }
-        if (cantidadStock < 0) {
-            throw new IllegalArgumentException("La cantidad de stock no puede ser negativa.");
+        if (cantidadStock <= 0) {
+            throw new IllegalArgumentException("La cantidad de stock no puede ser ni 0 ni negativa.");
         }
         if (precioUnidad < 0) {
             throw new IllegalArgumentException("El precio por unidad no puede ser negativo.");
